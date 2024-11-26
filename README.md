@@ -25,11 +25,11 @@ https://github.com/krishnaik06/Kidney-Disease-Classification-Deep-Learning-Proje
 ### STEP 01- Create a conda environment after opening the repository
 
 ```bash
-conda create -n cnncls python=3.8 -y
+conda create -n kidney python=3.8 -y
 ```
 
 ```bash
-conda activate cnncls
+conda activate kidney
 ```
 
 
@@ -57,7 +57,6 @@ open up you local host and port
 
 - [Documentation](https://mlflow.org/docs/latest/index.html)
 
-- [MLflow tutorial](https://youtu.be/qdcHHrsXA48?si=bD5vDS60akNphkem)
 
 ##### cmd
 - mlflow ui
@@ -74,11 +73,22 @@ Run this to export as env variables:
 
 ```bash
 
-export MLFLOW_TRACKING_URI=https://dagshub.com/entbappy/Kidney-Disease-Classification-MLflow-DVC.mlflow
+import mlflow
+import mlflow.keras
 
-export MLFLOW_TRACKING_USERNAME=entbappy 
+# Initialize DagsHub MLflow tracking
+dagshub.init(repo_owner='shahin509', repo_name='MLproject-2_Kidney-Disease-Classification', mlflow=True)
 
-export MLFLOW_TRACKING_PASSWORD=6824692c47a369aa6f9eac5b10041d5c8edbcef0
+# Start the MLflow tracking
+            with mlflow.start_run():
+                # Log parameters and metrics
+                mlflow.log_params(self.config.all_params)
+                mlflow.log_metrics(
+                    {"loss": self.score[0], "accuracy": self.score[1]}
+                )
+
+                # Determine the tracking URI type
+                tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
 ```
 
